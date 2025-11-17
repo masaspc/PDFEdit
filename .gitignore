@@ -54,3 +54,7 @@ coverage/
 # Cache
 .cache/
 .parcel-cache/
+
+# Debug and test files
+debug.html
+test-*.html

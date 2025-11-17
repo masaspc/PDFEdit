@@ -16,19 +16,13 @@
     <link rel="stylesheet" href="css/style.css">
 
     <!-- PDF.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" crossorigin="anonymous"></script>
 
     <!-- pdf-lib -->
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js" crossorigin="anonymous"></script>
 
     <!-- Tesseract.js for OCR -->
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
-    <!-- jsPDF for PDF generation -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-    <!-- html2canvas for HTML to PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" crossorigin="anonymous"></script>
 
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -159,7 +153,7 @@
                     <button class="toolbar-btn" id="zoomOut" title="縮小">
                         <i class="fas fa-search-minus"></i>
                     </button>
-                    <span id="zoomLevel" class="zoom-level">100%</span>
+                    <span id="zoomLevel" class="zoom-level">150%</span>
                     <button class="toolbar-btn" id="zoomIn" title="拡大">
                         <i class="fas fa-search-plus"></i>
                     </button>
@@ -301,11 +295,24 @@
 
     <!-- Service Worker登録 -->
     <script>
+        // Service Workerは開発中は無効化（デバッグしやすくするため）
+        // 本番環境では有効化してください
+        /*
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js')
                 .then(reg => console.log('Service Worker registered'))
                 .catch(err => console.error('Service Worker registration failed'));
         }
+        */
+
+        // デバッグ用：ライブラリが正しくロードされているか確認
+        window.addEventListener('load', () => {
+            console.log('=== Library Check ===');
+            console.log('PDF.js (pdfjsLib):', typeof pdfjsLib !== 'undefined' ? '✅ Loaded' : '❌ Not loaded');
+            console.log('pdf-lib (PDFLib):', typeof PDFLib !== 'undefined' ? '✅ Loaded' : '❌ Not loaded');
+            console.log('Tesseract:', typeof Tesseract !== 'undefined' ? '✅ Loaded' : '❌ Not loaded');
+            console.log('===================');
+        });
     </script>
 </body>
 </html>
