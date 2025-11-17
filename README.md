@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-**[🚀 デモを見る](https://masaspc.github.io/PDFEdit/)** | [📖 機能一覧](#機能) | [💡 使い方](#使い方) | [🤝 貢献](#貢献) | [📦 デプロイ](DEPLOY.md)
+**[🚀 デモを見る](https://masaspc.github.io/PDFEdit/)** | [📖 機能一覧](#機能) | [💡 使い方](#使い方) | [🐛 トラブルシューティング](TROUBLESHOOTING.md) | [🤝 貢献](#貢献) | [📦 デプロイ](DEPLOY.md)
 
 </div>
 
