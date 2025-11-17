@@ -5,7 +5,11 @@
 完全無料のクライアントサイドPDF編集ツール
 サーバー不要 | プライバシー保護 | オープンソース
 
-[デモを見る](#) | [機能一覧](#機能) | [使い方](#使い方) | [貢献](#貢献)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-success)](https://masaspc.github.io/PDFEdit/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+
+**[🚀 デモを見る](https://masaspc.github.io/PDFEdit/)** | [📖 機能一覧](#機能) | [💡 使い方](#使い方) | [🤝 貢献](#貢献) | [📦 デプロイ](DEPLOY.md)
 
 </div>
 
@@ -64,16 +68,19 @@
 
 ### オンライン版（推奨）
 
-1. [https://yourusername.github.io/PDFEdit/](https://yourusername.github.io/PDFEdit/) にアクセス
+1. **[https://masaspc.github.io/PDFEdit/](https://masaspc.github.io/PDFEdit/)** にアクセス
 2. PDFファイルをドラッグ&ドロップ、または「ファイルを選択」
 3. サイドバーから編集機能を選択
 4. 編集完了後、「PDFを保存」でダウンロード
+
+> 💡 **インストール不要**: ブラウザだけで動作します！
+> 🔒 **完全プライバシー**: ファイルは外部に送信されません
 
 ### ローカルインストール
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/yourusername/PDFEdit.git
+git clone https://github.com/masaspc/PDFEdit.git
 
 # ディレクトリに移動
 cd PDFEdit
@@ -185,7 +192,7 @@ PDFEdit/
 
 ### バグ報告・機能リクエスト
 
-[Issues](https://github.com/yourusername/PDFEdit/issues) でバグ報告や機能リクエストを受け付けています。
+[Issues](https://github.com/masaspc/PDFEdit/issues) でバグ報告や機能リクエストを受け付けています。
 
 ---
 
@@ -211,8 +218,8 @@ PDFEdit/
 質問やサポートが必要な場合:
 
 - 📧 Email: support@pdfedit.example.com
-- 💬 Discussions: [GitHub Discussions](https://github.com/yourusername/PDFEdit/discussions)
-- 🐛 Issues: [GitHub Issues](https://github.com/yourusername/PDFEdit/issues)
+- 💬 Discussions: [GitHub Discussions](https://github.com/masaspc/PDFEdit/discussions)
+- 🐛 Issues: [GitHub Issues](https://github.com/masaspc/PDFEdit/issues)
 
 ---
 
@@ -257,7 +264,7 @@ PDFEdit/
 
 ## 🌟 スター履歴
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yourusername/PDFEdit&type=Date)](https://star-history.com/#yourusername/PDFEdit&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=masaspc/PDFEdit&type=Date)](https://star-history.com/#masaspc/PDFEdit&Date)
 
 ---
 

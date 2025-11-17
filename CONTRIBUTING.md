@@ -12,7 +12,7 @@ PDFEditプロジェクトへの貢献に興味を持っていただき、あり�
 
 バグを見つけた場合:
 
-1. [Issues](https://github.com/yourusername/PDFEdit/issues) で既存の報告を確認
+1. [Issues](https://github.com/masaspc/PDFEdit/issues) で既存の報告を確認
 2. 新しいIssueを作成
 3. 以下の情報を含める:
    - バグの説明
@@ -26,7 +26,7 @@ PDFEditプロジェクトへの貢献に興味を持っていただき、あり�
 
 新機能を提案する場合:
 
-1. [Issues](https://github.com/yourusername/PDFEdit/issues) で提案
+1. [Issues](https://github.com/masaspc/PDFEdit/issues) で提案
 2. ユースケースを説明
 3. 実装方法の提案（任意）
 
@@ -73,7 +73,7 @@ docs: update installation guide
 
 ```bash
 # リポジトリをクローン
-git clone https://github.com/yourusername/PDFEdit.git
+git clone https://github.com/masaspc/PDFEdit.git
 cd PDFEdit
 
 # ローカルサーバーで起動
@@ -124,7 +124,7 @@ open http://localhost:8000
 
 質問がある場合:
 
-- [GitHub Discussions](https://github.com/yourusername/PDFEdit/discussions)
+- [GitHub Discussions](https://github.com/masaspc/PDFEdit/discussions)
 - Email: support@pdfedit.example.com
 
 ありがとうございます！🙏
