@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="完全無料のPDF編集ツール - サーバー不要、プライバシー保護、クライアントサイドで完結">
+    <title>無料PDF編集ツール - Free PDF Editor</title>
+
+    <!-- PWA設定 -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2563eb">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <!-- スタイルシート -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- PDF.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+
+    <!-- pdf-lib -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+    <!-- Tesseract.js for OCR -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+    <!-- jsPDF for PDF generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- html2canvas for HTML to PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-file-pdf"></i>
+                <h1>無料PDF編集ツール</h1>
+            </div>
+            <div class="header-controls">
+                <button id="darkModeToggle" class="icon-btn" title="ダークモード切替">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <select id="languageSelector" class="language-select">
+                    <option value="ja">日本語</option>
+                    <option value="en">English</option>
+                    <option value="zh">中文</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテナ -->
+    <div class="main-container">
+        <!-- サイドバー（ツールパレット） -->
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 data-i18n="file-operations">ファイル操作</h3>
+                <button class="tool-btn" id="openFile">
+                    <i class="fas fa-folder-open"></i>
+                    <span data-i18n="open-pdf">PDF を開く</span>
+                </button>
+                <button class="tool-btn" id="savePdf">
+                    <i class="fas fa-save"></i>
+                    <span data-i18n="save-pdf">PDF を保存</span>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 data-i18n="edit-tools">編集ツール</h3>
+                <button class="tool-btn" id="addText">
+                    <i class="fas fa-font"></i>
+                    <span data-i18n="add-text">テキスト追加</span>
+                </button>
+                <button class="tool-btn" id="addImage">
+                    <i class="fas fa-image"></i>
+                    <span data-i18n="add-image">画像挿入</span>
+                </button>
+                <button class="tool-btn" id="drawShape">
+                    <i class="fas fa-shapes"></i>
+                    <span data-i18n="draw-shape">図形描画</span>
+                </button>
+                <button class="tool-btn" id="highlight">
+                    <i class="fas fa-highlighter"></i>
+                    <span data-i18n="highlight">ハイライト</span>
+                </button>
+                <button class="tool-btn" id="addAnnotation">
+                    <i class="fas fa-comment"></i>
+                    <span data-i18n="annotation">注釈</span>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 data-i18n="page-operations">ページ操作</h3>
+                <button class="tool-btn" id="rotatePage">
+                    <i class="fas fa-rotate-right"></i>
+                    <span data-i18n="rotate">回転</span>
+                </button>
+                <button class="tool-btn" id="deletePage">
+                    <i class="fas fa-trash"></i>
+                    <span data-i18n="delete-page">ページ削除</span>
+                </button>
+                <button class="tool-btn" id="mergePdf">
+                    <i class="fas fa-object-group"></i>
+                    <span data-i18n="merge">PDF結合</span>
+                </button>
+                <button class="tool-btn" id="splitPdf">
+                    <i class="fas fa-cut"></i>
+                    <span data-i18n="split">PDF分割</span>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 data-i18n="advanced-features">高度な機能</h3>
+                <button class="tool-btn" id="ocrPdf">
+                    <i class="fas fa-text-slash"></i>
+                    <span data-i18n="ocr">OCR認識</span>
+                </button>
+                <button class="tool-btn" id="compressPdf">
+                    <i class="fas fa-compress"></i>
+                    <span data-i18n="compress">PDF圧縮</span>
+                </button>
+                <button class="tool-btn" id="addWatermark">
+                    <i class="fas fa-water"></i>
+                    <span data-i18n="watermark">透かし</span>
+                </button>
+                <button class="tool-btn" id="addSignature">
+                    <i class="fas fa-signature"></i>
+                    <span data-i18n="signature">電子署名</span>
+                </button>
+                <button class="tool-btn" id="protectPdf">
+                    <i class="fas fa-lock"></i>
+                    <span data-i18n="protect">パスワード保護</span>
+                </button>
+            </div>
+
+            <div class="sidebar-section">
+                <h3 data-i18n="convert">変換</h3>
+                <button class="tool-btn" id="pdfToImage">
+                    <i class="fas fa-file-image"></i>
+                    <span data-i18n="pdf-to-image">PDF → 画像</span>
+                </button>
+                <button class="tool-btn" id="imageToPdf">
+                    <i class="fas fa-file-pdf"></i>
+                    <span data-i18n="image-to-pdf">画像 → PDF</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- メインコンテンツエリア -->
+        <main class="main-content">
+            <!-- ツールバー -->
+            <div class="toolbar">
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" id="zoomOut" title="縮小">
+                        <i class="fas fa-search-minus"></i>
+                    </button>
+                    <span id="zoomLevel" class="zoom-level">100%</span>
+                    <button class="toolbar-btn" id="zoomIn" title="拡大">
+                        <i class="fas fa-search-plus"></i>
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" id="prevPage" title="前のページ">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <span class="page-info">
+                        <input type="number" id="currentPage" value="1" min="1"> / <span id="totalPages">0</span>
+                    </span>
+                    <button class="toolbar-btn" id="nextPage" title="次のページ">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <div class="toolbar-group">
+                    <button class="toolbar-btn" id="undo" title="元に戻す">
+                        <i class="fas fa-undo"></i>
+                    </button>
+                    <button class="toolbar-btn" id="redo" title="やり直し">
+                        <i class="fas fa-redo"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- PDFビューアー -->
+            <div class="viewer-container" id="viewerContainer">
+                <!-- ドラッグ&ドロップエリア -->
+                <div class="drop-zone" id="dropZone">
+                    <div class="drop-zone-content">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h2 data-i18n="drop-file">PDFファイルをドラッグ&ドロップ</h2>
+                        <p data-i18n="or-click">または</p>
+                        <button class="btn-primary" id="selectFile">
+                            <i class="fas fa-folder-open"></i>
+                            <span data-i18n="select-file">ファイルを選択</span>
+                        </button>
+                        <p class="info-text">
+                            <i class="fas fa-shield-alt"></i>
+                            <span data-i18n="privacy-note">すべての処理はブラウザ内で完結します。ファイルは外部に送信されません。</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- PDFキャンバス -->
+                <div class="pdf-canvas-wrapper" id="pdfCanvasWrapper" style="display: none;">
+                    <canvas id="pdfCanvas"></canvas>
+                    <canvas id="editCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- プログレスバー -->
+            <div class="progress-container" id="progressContainer" style="display: none;">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                <p class="progress-text" id="progressText">処理中...</p>
+            </div>
+        </main>
+
+        <!-- サムネイルパネル -->
+        <aside class="thumbnail-panel" id="thumbnailPanel">
+            <div class="thumbnail-header">
+                <h3 data-i18n="pages">ページ</h3>
+                <button class="icon-btn" id="closeThumbnails">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="thumbnail-list" id="thumbnailList"></div>
+        </aside>
+    </div>
+
+    <!-- モーダル: テキスト追加 -->
+    <div class="modal" id="textModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="add-text">テキスト追加</h3>
+                <button class="close-modal" data-modal="textModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <textarea id="textInput" placeholder="テキストを入力してください..." rows="4"></textarea>
+                <div class="form-group">
+                    <label for="fontSize">フォントサイズ:</label>
+                    <input type="number" id="fontSize" value="16" min="8" max="72">
+                </div>
+                <div class="form-group">
+                    <label for="textColor">色:</label>
+                    <input type="color" id="textColor" value="#000000">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" data-modal="textModal">キャンセル</button>
+                <button class="btn-primary" id="confirmAddText">追加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- モーダル: パスワード保護 -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 data-i18n="protect">パスワード保護</h3>
+                <button class="close-modal" data-modal="passwordModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="userPassword">ユーザーパスワード:</label>
+                    <input type="password" id="userPassword" placeholder="閲覧用パスワード">
+                </div>
+                <div class="form-group">
+                    <label for="ownerPassword">オーナーパスワード:</label>
+                    <input type="password" id="ownerPassword" placeholder="編集用パスワード">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" data-modal="passwordModal">キャンセル</button>
+                <button class="btn-primary" id="confirmProtect">保護</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 隠しファイル入力 -->
+    <input type="file" id="fileInput" accept=".pdf" style="display: none;">
+    <input type="file" id="imageInput" accept="image/*" style="display: none;">
+    <input type="file" id="mergeInput" accept=".pdf" multiple style="display: none;">
+
+    <!-- JavaScript -->
+    <script src="js/i18n.js"></script>
+    <script src="js/pdf-utils.js"></script>
+    <script src="js/pdf-viewer.js"></script>
+    <script src="js/pdf-editor.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- Service Worker登録 -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js')
+                .then(reg => console.log('Service Worker registered'))
+                .catch(err => console.error('Service Worker registration failed'));
+        }
+    </script>
+</body>
+</html>
