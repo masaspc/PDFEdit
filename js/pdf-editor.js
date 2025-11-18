@@ -741,9 +741,19 @@ class PDFEditor {
 
     async updatePDF(pdfBytes) {
         // PDFを更新して再レンダリング
-        pdfViewer.pdfData = pdfBytes;
+        // Uint8ArrayをArrayBufferに変換（detached問題を回避）
+        let pdfData;
+        if (pdfBytes instanceof Uint8Array) {
+            pdfData = pdfBytes.buffer.slice(0);
+        } else if (pdfBytes instanceof ArrayBuffer) {
+            pdfData = pdfBytes.slice(0);
+        } else {
+            pdfData = pdfBytes;
+        }
 
-        const loadingTask = pdfjsLib.getDocument({ data: pdfBytes });
+        pdfViewer.pdfData = pdfData;
+
+        const loadingTask = pdfjsLib.getDocument({ data: pdfData });
         pdfViewer.pdfDoc = await loadingTask.promise;
         pdfViewer.totalPages = pdfViewer.pdfDoc.numPages;
 

@@ -380,8 +380,19 @@ class PDFViewer {
     addToHistory() {
         // 履歴管理（簡易版）
         this.history = this.history.slice(0, this.historyIndex + 1);
+
+        // pdfDataのコピーを保存（detached問題を回避）
+        let pdfDataCopy;
+        if (this.pdfData instanceof ArrayBuffer) {
+            pdfDataCopy = this.pdfData.slice(0);
+        } else if (this.pdfData instanceof Uint8Array) {
+            pdfDataCopy = new Uint8Array(this.pdfData).buffer;
+        } else {
+            pdfDataCopy = this.pdfData;
+        }
+
         this.history.push({
-            pdfData: this.pdfData,
+            pdfData: pdfDataCopy,
             currentPage: this.currentPage
         });
         this.historyIndex++;
@@ -412,6 +423,14 @@ class PDFViewer {
     }
 
     getPDFData() {
+        // ArrayBufferのコピーを返す（detached問題を回避）
+        if (this.pdfData instanceof ArrayBuffer) {
+            return this.pdfData.slice(0);
+        }
+        // Uint8Arrayの場合もコピーを返す
+        if (this.pdfData instanceof Uint8Array) {
+            return new Uint8Array(this.pdfData).buffer;
+        }
         return this.pdfData;
     }
 
